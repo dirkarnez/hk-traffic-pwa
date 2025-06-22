@@ -13,3 +13,6 @@ hk-traffic-pwa
 - others
   - https://data.etabus.gov.hk/v1/transport/kmb/stop-eta/11B2034DDF30617A
 - https://hkbus.app/zh/route/116-1-quarry-bay-(yau-man-street)-tsz-wan-shan-(central)/001475%2C12
+
+### F5
+- https://www.16seats.net/chi/rmb/r_k36.html
