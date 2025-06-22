@@ -1,6 +1,8 @@
 hk-traffic-pwa
 ==============
-- https://data.etabus.gov.hk/v1/transport/kmb/eta/A60AE774B09A5E44/40/1
+### Specification
+- https://data.etabus.gov.hk/datagovhk/kmb_eta_api_specification.pdf
+- https://data.etabus.gov.hk/datagovhk/kmb_eta_data_dictionary.pdf
 - https://data.gov.hk/tc-data/dataset/hk-td-tis_21-etakmb
 
 ### 116
