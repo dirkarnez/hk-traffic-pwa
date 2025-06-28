@@ -1,0 +1,71 @@
+name: Crawl fleet data
+# on:
+#   schedule:
+#     - cron: '0 2 * * *'
+#   workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: 'x64'
+          cache: 'pip'
+          cache-dependency-path: _crawling/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./_crawling/requirements.txt
+
+      - name: Set up browser
+        uses: browser-actions/setup-firefox@v1
+
+      - name: Crawl
+        run: |
+          set -o xtrace
+          python ./_crawling/main.py
+
+      - name: Upload crawling outputs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Crawled Files
+          retention-days: 7
+          path: |
+            fleet.json
+            fleet.min.json
+
+      - name: Create "build" directory
+        run: mkdir -p build
+
+      - name: Calculate MD5 checksum
+        run: |
+          md5sum fleet.json | cut -c -32 | tr -d '\n' > fleet.json.md5
+          md5sum  fleet.min.json | cut -c -32 | tr -d '\n' > fleet.min.json.md5
+
+      - name: Copy output to "build" directory
+        run: |
+          cp \
+          fleet.json \
+          fleet.json.md5 \
+          fleet.min.json \
+          fleet.min.json.md5 \
+          build/
+
+      - name: Update resources
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
+          commit-message: Update resources
+          branch: data
+          clean: false
