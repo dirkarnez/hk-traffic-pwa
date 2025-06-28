@@ -1,5 +1,8 @@
 hk-traffic-pwa
 ==============
+### Reference
+- [markmybytes/lost-in-mtr: Car numbers lookup for MTR trains](https://github.com/markmybytes/lost-in-mtr)
+
 ### Specification
 - https://data.etabus.gov.hk/datagovhk/kmb_eta_api_specification.pdf
 - https://data.etabus.gov.hk/datagovhk/kmb_eta_data_dictionary.pdf
