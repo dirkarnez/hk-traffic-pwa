@@ -58,3 +58,8 @@ GOGOX (GoGoVan) [部分地區提供call taxi服務]
 ```
 ### MTR
 - [港鐵 > 港鐵列車服務](https://www.mtr.com.hk/ch/customer/services/service_hours_search.php?query_type=search&station=11)
+- https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=TML&sta=DIH
+- https://opendata.mtr.com.hk/doc/Next_Train_API_Spec_v1.7.pdf
+- https://opendata.mtr.com.hk/doc/Next_Train_DataDictionary_v1.7.pdf
+- https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data
+- [屯馬綫 (TML) 港鐵列車即時班次 | sammy.hk](https://sammy.hk/mtrtrain/)
