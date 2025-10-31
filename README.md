@@ -1,5 +1,8 @@
 hk-traffic-pwa
 ==============
+### TODOs
+- [ ] Must have timeout + cancel in `fetch`
+
 ### Reference
 - [markmybytes/lost-in-mtr: Car numbers lookup for MTR trains](https://github.com/markmybytes/lost-in-mtr)
 - [HTML Geolocation API](https://www.w3schools.com/html/html5_geolocation.asp)
