@@ -1,0 +1,114 @@
+https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1
+{
+  "type": "ETA",
+  "version": "1.0",
+  "generated_timestamp": "2026-01-13T15:41:09+08:00",
+  "data": [
+    {
+      "co": "KMB",
+      "route": "116",
+      "dir": "I",
+      "service_type": 1,
+      "seq": 13,
+      "dest_tc": "慈雲山(中)",
+      "dest_sc": "慈云山(中)",
+      "dest_en": "TSZ WAN SHAN (CENTRAL)",
+      "eta_seq": 1,
+      "eta": "2026-01-13T15:48:59+08:00",
+      "rmk_tc": "",
+      "rmk_sc": "",
+      "rmk_en": "",
+      "data_timestamp": "2026-01-13T15:40:46+08:00"
+    },
+    {
+      "co": "KMB",
+      "route": "116",
+      "dir": "I",
+      "service_type": 1,
+      "seq": 13,
+      "dest_tc": "慈雲山(中)",
+      "dest_sc": "慈云山(中)",
+      "dest_en": "TSZ WAN SHAN (CENTRAL)",
+      "eta_seq": 2,
+      "eta": "2026-01-13T15:57:23+08:00",
+      "rmk_tc": "",
+      "rmk_sc": "",
+      "rmk_en": "",
+      "data_timestamp": "2026-01-13T15:40:46+08:00"
+    },
+    {
+      "co": "KMB",
+      "route": "116",
+      "dir": "I",
+      "service_type": 1,
+      "seq": 13,
+      "dest_tc": "慈雲山(中)",
+      "dest_sc": "慈云山(中)",
+      "dest_en": "TSZ WAN SHAN (CENTRAL)",
+      "eta_seq": 3,
+      "eta": "2026-01-13T16:04:05+08:00",
+      "rmk_tc": "",
+      "rmk_sc": "",
+      "rmk_en": "",
+      "data_timestamp": "2026-01-13T15:40:46+08:00"
+    }
+  ]
+}
+
+
+https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116
+{
+  "type": "ETA",
+  "version": "2.0",
+  "generated_timestamp": "2026-01-13T15:41:21+08:00",
+  "data": [
+    {
+      "co": "CTB",
+      "route": "116",
+      "dir": "O",
+      "seq": 13,
+      "stop": "001475",
+      "dest_tc": "慈雲山(中)",
+      "dest_en": "Tsz Wan Shan (Central)",
+      "eta": "",
+      "rmk_tc": "九巴時段",
+      "eta_seq": 1,
+      "dest_sc": "慈云山(中)",
+      "rmk_en": "KMB Cycle",
+      "rmk_sc": "九巴时段",
+      "data_timestamp": "2026-01-13T15:41:02+08:00"
+    },
+    {
+      "co": "CTB",
+      "route": "116",
+      "dir": "O",
+      "seq": 13,
+      "stop": "001475",
+      "dest_tc": "慈雲山(中)",
+      "dest_en": "Tsz Wan Shan (Central)",
+      "eta": "",
+      "rmk_tc": "九巴時段",
+      "eta_seq": 2,
+      "dest_sc": "慈云山(中)",
+      "rmk_en": "KMB Cycle",
+      "rmk_sc": "九巴时段",
+      "data_timestamp": "2026-01-13T15:41:02+08:00"
+    },
+    {
+      "co": "CTB",
+      "route": "116",
+      "dir": "O",
+      "seq": 13,
+      "stop": "001475",
+      "dest_tc": "慈雲山(中)",
+      "dest_en": "Tsz Wan Shan (Central)",
+      "eta": "",
+      "rmk_tc": "九巴時段",
+      "eta_seq": 3,
+      "dest_sc": "慈云山(中)",
+      "rmk_en": "KMB Cycle",
+      "rmk_sc": "九巴时段",
+      "data_timestamp": "2026-01-13T15:41:02+08:00"
+    }
+  ]
+}
