@@ -1,0 +1,62 @@
+{
+    "git.path": "${env:USERPROFILE}\\Downloads\\PortableGit\\bin\\git.exe",
+    // Controls the rendering size of tabs in characters. 
+    // If set to auto, the value will be guessed based on the opened file.
+    "editor.tabSize": 4,
+    // Controls if the editor will insert spaces for tabs. 
+    // If set to auto, the value will be guessed based on the opened file.
+    "editor.insertSpaces": true,
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": null,
+        "Windows PowerShell": null,
+        // "Custom Init": {
+        //     "path": "pwsh.exe",
+        //     "args": [
+        //     //    "-noexit",
+        //     //    "-file",
+        //     //    "${env:APPDATA}\\PowerShell\\custom-init.ps1"
+        //     ]
+        // }
+        "Git Bash": {
+            "args": [
+                "-i"
+            ],
+            "icon": "terminal-bash",
+            "overrideName": true,
+            "path": "C:\\Users\\Administrator\\Downloads\\PortableGit\\git-bash.exe",
+            "source": "Git Bash",
+            "env": {
+                "PATH": "${env:USERPROFILE}\\Downloads\\node-v18.18.0-win-x64\\node-v18.18.0-win-x64"
+            }
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "env": {
+                "PATH": "D:\\Softwares\\PortableGit\\bin;${env:USERPROFILE}\\Downloads\\node-v24.11.0-win-x64\\node-v24.11.0-win-x64;D:\\Softwares\\node-v24.11.0-win-x64\\node-v24.11.0-win-x64"
+            }
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "C_Cpp.autoAddFileAssociations": false,
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always"
+        },
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnSave": true
+    },
+    "[svelte]": {
+        "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.formatOnSave": true,
+    "files.eol": "\n",
+    "python.analysis.importFormat": "relative"
+}
