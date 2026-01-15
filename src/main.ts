@@ -12,16 +12,50 @@ interface ETAReport {
 }
 
 interface Vehicle {
+    company: string,
     eta: Date
 }
 
-const fetchJSON = url => fetch(url).then(resp => resp.json());
+const fetchJSON = (url: string) => fetch(url).then(resp => resp.json());
+
+const fetchKMBJSON = (url: string) => fetchJSON(url).then(json => {
+  return json.data
+  .filter((item: any) => !!item["eta"])
+  .map((item: any) => {
+    var vehicle: Vehicle = {
+      company: "KMB",
+      eta: new Date(Date.parse(item["eta"]))
+    };
+    return vehicle;
+  });
+});
+const fetchCityJSON = (url: string) => fetchJSON(url).then(json => {
+  return json.data
+  .filter((item: any) => !!item["eta"])
+  .map((item: any) => {
+    var vehicle: Vehicle = {
+      company: "Citybus",
+      eta: new Date(Date.parse(item["eta"]))
+    };
+    return vehicle;
+  });
+});
+
 Promise.all([
-  fetchJSON("https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1"),
-  fetchJSON("https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116")
+  fetchKMBJSON("https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1"),
+  fetchCityJSON("https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116")
 ])
 .then(arrayOfJSON => {
-  debugger;
+  return arrayOfJSON.reduce((p, c) => {
+    return [...p, ...c];
+  }, [])
+})
+.then(list => {
+  list
+  .sort((a: Vehicle, b: Vehicle) => a.eta.getTime() - b.eta.getTime())
+  .forEach((vehicle: Vehicle) => {
+    console.log(`vehicle ${vehicle.company}: ${vehicle.eta.toLocaleTimeString()}`)
+  });
 })
 
 // document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
