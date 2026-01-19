@@ -3,13 +3,13 @@
 // import viteLogo from '/vite.svg'
 // import { setupCounter } from './counter.ts'
 
-// interface ETAReport {
-//     route: string
-//     destination: string
-//     waitingAt: string
-//     vehicles: Vehicle[]
-//     lastUpdate: Date
-// }
+interface ETAReport {
+    routeName: string
+    // destination: string
+    // waitingAt: string
+    vehicles: Vehicle[]
+    // lastUpdate: Date
+}
 
 interface Vehicle {
     company: string,
@@ -43,7 +43,7 @@ const fetchJSON = (url: string) => fetch(url, {
   cache: "no-cache"
 }).then(resp => resp.json());
 
-const fetchKMBJSON = (url: string) => fetchJSON(url).then(json => {
+const fetchKMBJSON = (url: string): Promise<Vehicle[]> => fetchJSON(url).then(json => {
   return json.data
   .filter((item: any) => !!item["eta"])
   .map((item: any) => {
@@ -56,7 +56,7 @@ const fetchKMBJSON = (url: string) => fetchJSON(url).then(json => {
   });
 });
 
-const fetchCityJSON = (url: string) => fetchJSON(url).then(json => {
+const fetchCityJSON = (url: string): Promise<Vehicle[]> => fetchJSON(url).then(json => {
   return json.data
   .filter((item: any) => !!item["eta"])
   .map((item: any) => {
@@ -77,9 +77,9 @@ const fetchRoute = (kmbURL: string | null, citybusURL: string | null) => {
   .then(arrayOfJSON => {
     return arrayOfJSON
     .filter(item => !!item)
-    .reduce((p, c) => {
+    .reduce((p: Vehicle[], c: Vehicle[]) => {
       return [...p, ...c];
-    }, [])
+    }, []);
   })
   // .then(list => {
   //   list
@@ -91,7 +91,13 @@ const fetchRoute = (kmbURL: string | null, citybusURL: string | null) => {
   // });
 }
 
-const myRoutes = [
+interface Route {
+  name: string,
+  kmbURL: string | null,
+  citybusURL: string
+}
+
+const myRoutes: Route[] = [
   {
     name: "116 - HH to Tak Oi",
     kmbURL: "https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1",
@@ -107,6 +113,16 @@ const myRoutes = [
     kmbURL: null,
     citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001573/793"
   },
+  {
+    name: "796X - TKO 先進製造業中心, 駿光街 to HH",
+    kmbURL: null,
+    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002927/796X"
+  },
+  {
+    name: "796X - TKO 日出康城領都, 環保大道 to HH",
+    kmbURL: null,
+    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002928/796X"
+  }
 ];
 
 ((container: HTMLDivElement | null) => {
@@ -116,16 +132,21 @@ const myRoutes = [
 
   Promise
     .all(myRoutes.map(myRoute => {
-      fetchRoute(myRoute.kmbURL, myRoute.citybusURL)
-      .then(routes => {
+      return fetchRoute(myRoute.kmbURL, myRoute.citybusURL)
+        .then((routes): ETAReport => ({routeName: myRoute.name, vehicles: routes}));
+    }))
+    .then((etaReportArray: ETAReport[]) => {
+      etaReportArray.forEach((etaReport: ETAReport) => {
         const details = document.createElement("details");
         const summary = document.createElement("summary");
         details.open = true;
-        summary.innerText = myRoute.name;
+        summary.innerText = etaReport.routeName;
 
         const ol = document.createElement("ol");
-        routes
-          .sort((a: Vehicle, b: Vehicle) => a.eta.getTime() - b.eta.getTime())
+        etaReport.vehicles
+          .sort((a: Vehicle, b: Vehicle) => {
+            return a.eta.getTime() - b.eta.getTime();
+          })
           .forEach((routeVehicle: Vehicle) => {
             const li = document.createElement("li");
             const duration = minutesDiff(routeVehicle.eta, routeVehicle.dataTime);
@@ -136,5 +157,6 @@ const myRoutes = [
         details.appendChild(ol);
         container.appendChild(details);
       });
-    }));
+    });
 })(document.querySelector<HTMLDivElement>('#app'));
+
