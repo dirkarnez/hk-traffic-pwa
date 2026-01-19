@@ -3,11 +3,18 @@
 // import viteLogo from '/vite.svg'
 // import { setupCounter } from './counter.ts'
 
+interface ETAReportDOM {
+  detailsElement: HTMLDetailsElement,
+  summaryElement: HTMLElement,
+  orderListElement: HTMLOListElement
+}
+
 interface ETAReport {
     routeName: string
     // destination: string
     // waitingAt: string
-    vehicles: Vehicle[]
+    vehicles: Vehicle[],
+    dom: ETAReportDOM
     // lastUpdate: Date
 }
 
@@ -132,17 +139,27 @@ const myRoutes: Route[] = [
 
   Promise
     .all(myRoutes.map(myRoute => {
+      const details = document.createElement("details");
+      const summary = document.createElement("summary");
+      details.open = true;
+      summary.innerText = myRoute.name;
+      const ol = document.createElement("ol");
+      details.appendChild(ol);
+      details.appendChild(summary);
+      container.appendChild(details);
       return fetchRoute(myRoute.kmbURL, myRoute.citybusURL)
-        .then((routes): ETAReport => ({routeName: myRoute.name, vehicles: routes}));
+        .then((routes): ETAReport => ({
+          routeName: myRoute.name, 
+          vehicles: routes, 
+          dom: { 
+            detailsElement: details, 
+            summaryElement: summary, 
+            orderListElement: ol  
+          }}
+        ));
     }))
     .then((etaReportArray: ETAReport[]) => {
       etaReportArray.forEach((etaReport: ETAReport) => {
-        const details = document.createElement("details");
-        const summary = document.createElement("summary");
-        details.open = true;
-        summary.innerText = etaReport.routeName;
-
-        const ol = document.createElement("ol");
         etaReport.vehicles
           .sort((a: Vehicle, b: Vehicle) => {
             return a.eta.getTime() - b.eta.getTime();
@@ -151,12 +168,11 @@ const myRoutes: Route[] = [
             const li = document.createElement("li");
             const duration = minutesDiff(routeVehicle.eta, routeVehicle.dataTime);
             li.innerText = `[${duration.minutes} mins ${duration.seconds} secs] ${routeVehicle.company}`;
-            ol.appendChild(li);
+            etaReport.dom.orderListElement.appendChild(li);
           });
-        details.appendChild(summary);
-        details.appendChild(ol);
-        container.appendChild(details);
-      });
+        });
+
+        
     });
 })(document.querySelector<HTMLDivElement>('#app'));
 
