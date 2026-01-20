@@ -14,7 +14,8 @@ interface ETAReport {
     // destination: string
     // waitingAt: string
     vehicles: Vehicle[],
-    dom: ETAReportDOM
+    dom: ETAReportDOM,
+    otherPlatforms: OtherPlatform[]
     // lastUpdate: Date
 }
 
@@ -76,7 +77,7 @@ const fetchCityJSON = (url: string): Promise<Vehicle[]> => fetchJSON(url).then(j
   });
 });
 
-const fetchRoute = (kmbURL: string | null, citybusURL: string | null) => {
+const fetchRoute = (kmbURL: string[] | null, citybusURL: string[] | null) => {
   return Promise.all([
     !!kmbURL ? fetchKMBJSON(kmbURL) : Promise.resolve(null),
     !!citybusURL ? fetchCityJSON(citybusURL) : Promise.resolve(null),
@@ -98,37 +99,73 @@ const fetchRoute = (kmbURL: string | null, citybusURL: string | null) => {
   // });
 }
 
+interface OtherPlatform {
+  url: string,
+  name: string
+}
+
 interface Route {
   name: string,
-  kmbURL: string | null,
-  citybusURL: string
+  kmbURL: string[] | null,
+  citybusURL: string[] | null,
+  otherPlatforms: OtherPlatform[]
 }
 
 const myRoutes: Route[] = [
   {
     name: "116 - HH to Tak Oi",
     kmbURL: "https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1",
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116"
+    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116",
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/116-1-quarry-bay-(yau-man-street)-tsz-wan-shan-(central)/001475%2C12"
+      }
+    ]
   },
   {
     name: "793 - TKL to TKO",
     kmbURL: null,
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793"
+    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793",
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/002917%2C26"
+      }
+    ]
   },
   {
     name: "793 - Mikiki to TKO",
     kmbURL: null,
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001573/793"
+    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001573/793",
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/001573%2C19"
+      }
+    ]
   },
   {
     name: "796X - TKO 先進製造業中心, 駿光街 to HH",
     kmbURL: null,
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002927/796X"
+    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002927/796X",
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: ""
+      }
+    ]
   },
   {
     name: "796X - TKO 日出康城領都, 環保大道 to HH",
     kmbURL: null,
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002928/796X"
+    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002928/796X",
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: ""
+      }
+    ]
   }
 ];
 
@@ -142,21 +179,22 @@ const myRoutes: Route[] = [
       const details = document.createElement("details");
       const summary = document.createElement("summary");
       details.open = true;
-      summary.innerText = myRoute.name;
+      summary.innerHTML = `<div style="display: contents">${myRoute.name} ${myRoute.otherPlatforms.map(({url, name}) => `<a href="https://www.google.com/search?${url}" target="_blank">${name}</a>`).join("&nbsp;")}</div>`;
       const ol = document.createElement("ol");
       details.appendChild(ol);
       details.appendChild(summary);
       container.appendChild(details);
       return fetchRoute(myRoute.kmbURL, myRoute.citybusURL)
-        .then((routes): ETAReport => ({
+        .then((vehicles): ETAReport => ({
           routeName: myRoute.name, 
-          vehicles: routes, 
+          vehicles: vehicles, 
           dom: { 
             detailsElement: details, 
             summaryElement: summary, 
-            orderListElement: ol  
-          }}
-        ));
+            orderListElement: ol
+          },
+          otherPlatforms: myRoute.otherPlatforms
+        }));
     }))
     .then((etaReportArray: ETAReport[]) => {
       etaReportArray.forEach((etaReport: ETAReport) => {
