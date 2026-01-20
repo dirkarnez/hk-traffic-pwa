@@ -140,19 +140,6 @@ const myRoutes: Route[] = [
     ]
   },
   {
-    name: "793 - 調景嶺 to 將軍澳 先進製造業中心, 駿光街",
-    kmbURL: null,
-    kmbDestTC: null,
-    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793" ],
-    citybusDestTC: null,
-    otherPlatforms: [
-      {
-        name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/002917%2C26"
-      }
-    ]
-  },
-  {
     name: "793 - 新蒲崗 Mikiki to 將軍澳 先進製造業中心, 駿光街",
     kmbURL: null,
     kmbDestTC: null,
@@ -162,6 +149,19 @@ const myRoutes: Route[] = [
       {
         name: "hkbus.app",
         url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/001573%2C19"
+      }
+    ]
+  },
+  {
+    name: "793 - 調景嶺 to 將軍澳 先進製造業中心, 駿光街",
+    kmbURL: null,
+    kmbDestTC: null,
+    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793" ],
+    citybusDestTC: null,
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/002917%2C26"
       }
     ]
   },
@@ -187,7 +187,11 @@ const myRoutes: Route[] = [
     otherPlatforms: [
       {
         name: "hkbus.app",
-        url: ""
+        url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-tsim-sha-tsui-east/002927%2C4"
+      },
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-%EF%BC%8F-tseung-kwan-o-station-tsim-sha-tsui-east/002927%2C4"
       }
     ]
   },
@@ -200,7 +204,11 @@ const myRoutes: Route[] = [
     otherPlatforms: [
       {
         name: "hkbus.app",
-        url: ""
+        url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-tsim-sha-tsui-east/002928%2C5"
+      },
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-%EF%BC%8F-tseung-kwan-o-station-tsim-sha-tsui-east/002928%2C5"
       }
     ]
   }
