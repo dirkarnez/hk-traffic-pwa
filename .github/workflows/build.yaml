@@ -1,0 +1,29 @@
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+    contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+
+    - name: npm build
+      run: |
+        npm install
+        npm run-script build
+
+    - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
+    
