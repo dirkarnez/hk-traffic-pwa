@@ -77,17 +77,29 @@ const fetchCityJSON = (url: string): Promise<Vehicle[]> => fetchJSON(url).then(j
   });
 });
 
-const fetchRoute = (kmbURL: string[] | null, citybusURL: string[] | null) => {
+const fetchRoute = (kmbURLs: string[] | null, citybusURLs: string[] | null) => {
   return Promise.all([
-    !!kmbURL ? fetchKMBJSON(kmbURL) : Promise.resolve(null),
-    !!citybusURL ? fetchCityJSON(citybusURL) : Promise.resolve(null),
+    Array.isArray(kmbURLs) ? Promise.all(kmbURLs.map(kmbURL => fetchKMBJSON(kmbURL))) : Promise.resolve(null),
+    Array.isArray(citybusURLs) ? Promise.all(citybusURLs.map(citybusURL => fetchCityJSON(citybusURL))) : Promise.resolve(null),
   ])
-  .then(arrayOfJSON => {
-    return arrayOfJSON
-    .filter(item => !!item)
-    .reduce((p: Vehicle[], c: Vehicle[]) => {
-      return [...p, ...c];
+  .then(companiesJSON => {
+    return companiesJSON
+    .filter(company => !!company)
+    .reduce((p: Vehicle[], companyVehicles: Vehicle[][]) => {
+      return [
+        ...p,
+        ...companyVehicles.reduce((q: Vehicle[], vehicles: Vehicle[]) => {
+          return [
+            ...q,
+            ...vehicles
+          ]
+        }, [])
+      ];
     }, []);
+
+    // .reduce((p: Vehicle[], c: Vehicle[]) => {
+    //   return [...p, ...c];
+    // }, []);
   })
   // .then(list => {
   //   list
@@ -114,8 +126,8 @@ interface Route {
 const myRoutes: Route[] = [
   {
     name: "116 - HH to Tak Oi",
-    kmbURL: "https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1",
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116",
+    kmbURL: ["https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1"],
+    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116"],
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -126,7 +138,7 @@ const myRoutes: Route[] = [
   {
     name: "793 - TKL to TKO",
     kmbURL: null,
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793",
+    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793" ],
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -137,7 +149,7 @@ const myRoutes: Route[] = [
   {
     name: "793 - Mikiki to TKO",
     kmbURL: null,
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001573/793",
+    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001573/793"],
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -148,7 +160,7 @@ const myRoutes: Route[] = [
   {
     name: "796X - TKO 先進製造業中心, 駿光街 to HH",
     kmbURL: null,
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002927/796X",
+    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002927/796X"],
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -159,7 +171,7 @@ const myRoutes: Route[] = [
   {
     name: "796X - TKO 日出康城領都, 環保大道 to HH",
     kmbURL: null,
-    citybusURL: "https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002928/796X",
+    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002928/796X"],
     otherPlatforms: [
       {
         name: "hkbus.app",
