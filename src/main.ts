@@ -51,9 +51,9 @@ const fetchJSON = (url: string) => fetch(url, {
   cache: "no-cache"
 }).then(resp => resp.json());
 
-const fetchKMBJSON = (url: string): Promise<Vehicle[]> => fetchJSON(url).then(json => {
+const fetchKMBJSON = (url: string, kmbDestTC: string | null): Promise<Vehicle[]> => fetchJSON(url).then(json => {
   return json.data
-  .filter((item: any) => !!item["eta"])
+  .filter((item: any) => !!item["eta"] && (kmbDestTC == null || item["dest_tc"] == kmbDestTC))
   .map((item: any) => {
     var vehicle: Vehicle = {
       company: "KMB",
@@ -64,9 +64,9 @@ const fetchKMBJSON = (url: string): Promise<Vehicle[]> => fetchJSON(url).then(js
   });
 });
 
-const fetchCityJSON = (url: string): Promise<Vehicle[]> => fetchJSON(url).then(json => {
+const fetchCityJSON = (url: string, citybusDestTC: string | null): Promise<Vehicle[]> => fetchJSON(url).then(json => {
   return json.data
-  .filter((item: any) => !!item["eta"])
+  .filter((item: any) => !!item["eta"] && (citybusDestTC == null || item["dest_tc"] == citybusDestTC))
   .map((item: any) => {
     var vehicle: Vehicle = {
       company: "Citybus",
@@ -77,10 +77,10 @@ const fetchCityJSON = (url: string): Promise<Vehicle[]> => fetchJSON(url).then(j
   });
 });
 
-const fetchRoute = (kmbURLs: string[] | null, citybusURLs: string[] | null) => {
+const fetchRoute = (kmbURLs: string[] | null, kmbDestTC: string | null, citybusURLs: string[] | null, citybusDestTC: string | null) => {
   return Promise.all([
-    Array.isArray(kmbURLs) ? Promise.all(kmbURLs.map(kmbURL => fetchKMBJSON(kmbURL))) : Promise.resolve(null),
-    Array.isArray(citybusURLs) ? Promise.all(citybusURLs.map(citybusURL => fetchCityJSON(citybusURL))) : Promise.resolve(null),
+    Array.isArray(kmbURLs) ? Promise.all(kmbURLs.map(kmbURL => fetchKMBJSON(kmbURL, kmbDestTC))) : Promise.resolve(null),
+    Array.isArray(citybusURLs) ? Promise.all(citybusURLs.map(citybusURL => fetchCityJSON(citybusURL, citybusDestTC))) : Promise.resolve(null),
   ])
   .then(companiesJSON => {
     return companiesJSON
@@ -120,6 +120,8 @@ interface Route {
   name: string,
   kmbURL: string[] | null,
   citybusURL: string[] | null,
+  kmbDestTC: string | null,
+  citybusDestTC: string | null,
   otherPlatforms: OtherPlatform[]
 }
 
@@ -127,7 +129,9 @@ const myRoutes: Route[] = [
   {
     name: "116 - HH to Tak Oi",
     kmbURL: ["https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1"],
+    kmbDestTC: "慈雲山(中)",
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116"],
+    citybusDestTC: "慈雲山(中)",
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -136,9 +140,11 @@ const myRoutes: Route[] = [
     ]
   },
   {
-    name: "793 - TKL to TKO",
+    name: "793 - 調景嶺 to 將軍澳 先進製造業中心, 駿光街",
     kmbURL: null,
+    kmbDestTC: null,
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793" ],
+    citybusDestTC: null,
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -147,9 +153,11 @@ const myRoutes: Route[] = [
     ]
   },
   {
-    name: "793 - Mikiki to TKO",
+    name: "793 - 新蒲崗 Mikiki to 將軍澳 先進製造業中心, 駿光街",
     kmbURL: null,
+    kmbDestTC: null,
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001573/793"],
+    citybusDestTC: "將軍澳工業邨",
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -158,9 +166,24 @@ const myRoutes: Route[] = [
     ]
   },
   {
-    name: "796X - TKO 先進製造業中心, 駿光街 to HH",
+    name: "796X - 調景嶺 to 將軍澳 先進製造業中心, 駿光街",
     kmbURL: null,
+    kmbDestTC: null,
+    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/796X"],
+    citybusDestTC: "將軍澳工業邨",
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/796x-2-tsim-sha-tsui-east-tseung-kwan-o-industrial-estate"
+      }
+    ]
+  },
+  {
+    name: "796X - 將軍澳 先進製造業中心, 駿光街 to HH",
+    kmbURL: null,
+    kmbDestTC: null,
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002927/796X"],
+    citybusDestTC: null,
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -169,9 +192,11 @@ const myRoutes: Route[] = [
     ]
   },
   {
-    name: "796X - TKO 日出康城領都, 環保大道 to HH",
+    name: "796X - 將軍澳 日出康城領都, 環保大道 to HH",
     kmbURL: null,
+    kmbDestTC: null,
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002928/796X"],
+    citybusDestTC: null,
     otherPlatforms: [
       {
         name: "hkbus.app",
@@ -196,7 +221,7 @@ const myRoutes: Route[] = [
       details.appendChild(ol);
       details.appendChild(summary);
       container.appendChild(details);
-      return fetchRoute(myRoute.kmbURL, myRoute.citybusURL)
+      return fetchRoute(myRoute.kmbURL, myRoute.kmbDestTC, myRoute.citybusURL, myRoute.citybusDestTC)
         .then((vehicles): ETAReport => ({
           routeName: myRoute.name, 
           vehicles: vehicles, 
