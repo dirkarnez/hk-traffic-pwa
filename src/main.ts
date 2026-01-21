@@ -224,7 +224,7 @@ const myRoutes: Route[] = [
       const details = document.createElement("details");
       const summary = document.createElement("summary");
       details.open = true;
-      summary.innerHTML = `<div style="display: contents">${myRoute.name} ${myRoute.otherPlatforms.map(({url, name}) => `<a href="https://www.google.com/search?${url}" target="_blank">${name}</a>`).join("&nbsp;")}</div>`;
+      summary.innerHTML = `<div style="display: contents">${myRoute.name} ${myRoute.otherPlatforms.map(({url, name}) => `<a href="${url}" target="_blank">${name}</a>`).join("&nbsp;")}</div>`;
       const ol = document.createElement("ol");
       details.appendChild(ol);
       details.appendChild(summary);
