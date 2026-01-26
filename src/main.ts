@@ -180,11 +180,11 @@ const myRoutes: Route[] = [
     otherPlatforms: [
       {
         name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/3d-1-tsz-wan-shan-(central)-kwun-tong-(yue-man-square)/8C09B3648DCDAF3C%2C10"
+        url: "https://hkbus.app/zh/route/3d-1-tsz-wan-shan-(central)-kwun-tong-(yue-man-square)/A4C9136D18013389%2C3"
       },
       {
         name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/3d-3-ching-hong-house-kwun-tong-(yue-man-square)/8C09B3648DCDAF3C%2C8"
+        url: "https://hkbus.app/zh/route/3d-3-ching-hong-house-kwun-tong-(yue-man-square)/A4C9136D18013389%2C1"
       }
     ]
   },
