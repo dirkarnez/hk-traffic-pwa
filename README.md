@@ -4,6 +4,7 @@
 - [ ] Must have timeout + cancel in `fetch`
 - [ ] Statiscally estimate trip time
 - [ ] Cache schedule
+- [ ] Worker-based timer countdown + background refetch
 
 ### Reference
 - [markmybytes/lost-in-mtr: Car numbers lookup for MTR trains](https://github.com/markmybytes/lost-in-mtr)

@@ -51,36 +51,65 @@ const fetchJSON = (url: string) => fetch(url, {
   cache: "no-cache"
 }).then(resp => resp.json());
 
-const fetchKMBJSON = (url: string, kmbDestTC: string | null): Promise<Vehicle[]> => fetchJSON(url).then(json => {
-  return json.data
-  .filter((item: any) => !!item["eta"] && (kmbDestTC == null || item["dest_tc"] == kmbDestTC))
-  .map((item: any) => {
-    var vehicle: Vehicle = {
+
+interface Adapter {
+  filter(jsonObject: any): boolean
+  deserialize(jsonObject: any): Vehicle
+}
+
+class KMBAdapter implements Adapter {
+  private kmbDestTC: string | null;
+
+  constructor(kmbDestTC: string | null) {
+    this.kmbDestTC = kmbDestTC;
+  }
+  
+  filter(jsonObject: any): boolean {
+    return !!jsonObject["eta"] && (this.kmbDestTC == null || jsonObject["dest_tc"] == this.kmbDestTC)
+  }
+
+  deserialize(jsonObject: any): Vehicle {
+    const vehicle: Vehicle = {
       company: "KMB",
-      eta: new Date(Date.parse(item["eta"])),
-      dataTime: new Date(Date.parse(item["data_timestamp"])),
+      eta: new Date(Date.parse(jsonObject["eta"])),
+      dataTime: new Date(Date.parse(jsonObject["data_timestamp"])),
     };
     return vehicle;
-  });
+  }
+}
+
+class CitybusAdapter implements Adapter {
+  private citybusDestTC: string | null;
+
+  constructor(citybusDestTC: string | null) {
+    this.citybusDestTC = citybusDestTC;
+  }
+  
+  filter(jsonObject: any): boolean {
+    return !!jsonObject["eta"] && (this.citybusDestTC == null || jsonObject["dest_tc"] == this.citybusDestTC)
+  }
+
+  deserialize(jsonObject: any): Vehicle {
+    const vehicle: Vehicle = {
+      company: "Citybus",
+      eta: new Date(Date.parse(jsonObject["eta"])),
+      dataTime: new Date(Date.parse(jsonObject["data_timestamp"])),
+    };
+    return vehicle;
+  }
+}
+
+const fetchVehicleJSON = (url: string, adapter: Adapter): Promise<Vehicle[]> => fetchJSON(url).then(json => {
+  return json.data
+  .filter((item: any) => adapter.filter(item))
+  .map((item: any) => adapter.deserialize(item));
 });
 
-const fetchCityJSON = (url: string, citybusDestTC: string | null): Promise<Vehicle[]> => fetchJSON(url).then(json => {
-  return json.data
-  .filter((item: any) => !!item["eta"] && (citybusDestTC == null || item["dest_tc"] == citybusDestTC))
-  .map((item: any) => {
-    var vehicle: Vehicle = {
-      company: "Citybus",
-      eta: new Date(Date.parse(item["eta"])),
-      dataTime: new Date(Date.parse(item["data_timestamp"])),
-    };
-    return vehicle;
-  });
-});
 
 const fetchRoute = (kmbURLs: string[] | null, kmbDestTC: string | null, citybusURLs: string[] | null, citybusDestTC: string | null) => {
   return Promise.all([
-    Array.isArray(kmbURLs) ? Promise.all(kmbURLs.map(kmbURL => fetchKMBJSON(kmbURL, kmbDestTC))) : Promise.resolve(null),
-    Array.isArray(citybusURLs) ? Promise.all(citybusURLs.map(citybusURL => fetchCityJSON(citybusURL, citybusDestTC))) : Promise.resolve(null),
+    Array.isArray(kmbURLs) ? Promise.all(kmbURLs.map(kmbURL => fetchVehicleJSON(kmbURL, new KMBAdapter(kmbDestTC)))) : Promise.resolve(null),
+    Array.isArray(citybusURLs) ? Promise.all(citybusURLs.map(citybusURL => fetchVehicleJSON(citybusURL, new CitybusAdapter(citybusDestTC)))) : Promise.resolve(null),
   ])
   .then(companiesJSON => {
     return companiesJSON
@@ -136,6 +165,26 @@ const myRoutes: Route[] = [
       {
         name: "hkbus.app",
         url: "https://hkbus.app/zh/route/116-1-quarry-bay-(yau-man-street)-tsz-wan-shan-(central)/001475%2C12"
+      }
+    ]
+  },
+  {    
+    name: "3D - Tak Oi to KLB",
+    kmbURL: [
+      "https://data.etabus.gov.hk/v1/transport/kmb/eta/A4C9136D18013389/3D/1",
+      "https://data.etabus.gov.hk/v1/transport/kmb/eta/A4C9136D18013389/3D/3"
+    ],
+    kmbDestTC: "觀塘(裕民坊)",
+    citybusURL: null,
+    citybusDestTC: null,
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/3d-1-tsz-wan-shan-(central)-kwun-tong-(yue-man-square)/8C09B3648DCDAF3C%2C10"
+      },
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/3d-3-ching-hong-house-kwun-tong-(yue-man-square)/8C09B3648DCDAF3C%2C8"
       }
     ]
   },
@@ -224,7 +273,7 @@ const myRoutes: Route[] = [
       const details = document.createElement("details");
       const summary = document.createElement("summary");
       details.open = true;
-      summary.innerHTML = `<div style="display: contents">${myRoute.name} ${myRoute.otherPlatforms.map(({url, name}) => `<a href="${url}" target="_blank">${name}</a>`).join("&nbsp;")}</div>`;
+      summary.innerHTML = `<div style="display: contents">${myRoute.name} ${[...(Array.isArray(myRoute.kmbURL) ? myRoute.kmbURL : []), ...(Array.isArray(myRoute.citybusURL) ? myRoute.citybusURL : [])].map((url, i) => `<a href="${url}" target="_blank">API ${i}</a>`).join("&nbsp;")} ${myRoute.otherPlatforms.map(({url, name}) => `<a href="${url}" target="_blank">${name}</a>`).join("&nbsp;")}</div>`;
       const ol = document.createElement("ol");
       details.appendChild(ol);
       details.appendChild(summary);
