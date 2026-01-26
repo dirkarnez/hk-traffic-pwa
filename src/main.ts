@@ -273,7 +273,7 @@ const myRoutes: Route[] = [
       const details = document.createElement("details");
       const summary = document.createElement("summary");
       details.open = true;
-      summary.innerHTML = `<div style="display: contents">${myRoute.name} ${[...(Array.isArray(myRoute.kmbURL) ? myRoute.kmbURL : []), ...(Array.isArray(myRoute.citybusURL) ? myRoute.citybusURL : [])].map((url, i) => `<a href="${url}" target="_blank">API ${i}</a>`).join("&nbsp;")} ${myRoute.otherPlatforms.map(({url, name}) => `<a href="${url}" target="_blank">${name}</a>`).join("&nbsp;")}</div>`;
+      summary.innerHTML = `<div style="display: contents">${myRoute.name} ${[...(Array.isArray(myRoute.kmbURL) ? myRoute.kmbURL : []), ...(Array.isArray(myRoute.citybusURL) ? myRoute.citybusURL : [])].map((url, i) => `<a href="${url}" target="_blank">API #${i}</a>`).join("&nbsp;")} ${myRoute.otherPlatforms.map(({url, name}) => `<a href="${url}" target="_blank">${name}</a>`).join("&nbsp;")}</div>`;
       const ol = document.createElement("ol");
       details.appendChild(ol);
       details.appendChild(summary);
