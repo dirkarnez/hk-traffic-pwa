@@ -1,5 +1,5 @@
-[hk-traffic-pwa](https://dirkarnez.github.io/hk-traffic-pwa/dist)
-=================================================================
+[hk-traffic-pwa](https://dirkarnez.github.io/hk-traffic-pwa)
+============================================================
 ### TODOs
 - [ ] Must have timeout + cancel in `fetch`
 - [ ] Statiscally estimate trip time
