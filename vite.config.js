@@ -2,7 +2,7 @@
  * @type {import('vite').UserConfig}
  */
 const config = {
-  base: "/hk-traffic-pwa/dist/"
+  base: "/hk-traffic-pwa/"
 }
 
 export default config
