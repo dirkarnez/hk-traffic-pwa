@@ -168,6 +168,19 @@ const myRoutes: Route[] = [
       }
     ]
   },
+  {
+    name: "116 - Tak Oi to HH",
+    kmbURL: null,
+    kmbDestTC: null,
+    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001703/116"],
+    citybusDestTC: "鰂魚涌",
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/116-1-tsz-wan-shan-(central)-quarry-bay-(yau-man-street)/001703%2C3"
+      }
+    ]
+  },
   {    
     name: "3D - Tak Oi to KLB",
     kmbURL: [
