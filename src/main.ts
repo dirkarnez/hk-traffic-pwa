@@ -156,7 +156,7 @@ interface Route {
 
 const myRoutes: Route[] = [
   {
-    name: "116 - 紅磡 to 德愛",
+    name: "116 - 紅磡 -> 德愛",
     kmbURL: ["https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1"],
     kmbDestTC: "慈雲山(中)",
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116"],
@@ -169,7 +169,7 @@ const myRoutes: Route[] = [
     ]
   },
   {
-    name: "116 - 德愛 to 紅磡",
+    name: "116 - 德愛 -> 紅磡",
     kmbURL: null,
     kmbDestTC: null,
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001703/116"],
@@ -182,7 +182,20 @@ const myRoutes: Route[] = [
     ]
   },
   {
-    name: "272S - 科技園 to 鑽石山",
+    name: "272S - 鑽石山 -> 科技園",
+    kmbURL: [ "https://data.etabus.gov.hk/v1/transport/kmb/eta/D7132C4D6287B688/272S/1" ],
+    kmbDestTC: "香港科學園",
+    citybusURL: null,
+    citybusDestTC: null,
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/272s-1-diamond-hill-station-hong-kong-science-park/D7132C4D6287B688%2C0"
+      }
+    ]
+  },
+  {
+    name: "272S - 科技園 -> 鑽石山",
     kmbURL: [ "https://data.etabus.gov.hk/v1/transport/kmb/eta/9C6800DD6E0CD683/272S/1" ],
     kmbDestTC: "鑽石山站",
     citybusURL: null,
@@ -195,7 +208,7 @@ const myRoutes: Route[] = [
     ]
   },
   {    
-    name: "3D - Tak Oi to KLB",
+    name: "3D - 德愛 -> 九龍灣",
     kmbURL: [
       "https://data.etabus.gov.hk/v1/transport/kmb/eta/A4C9136D18013389/3D/1",
       "https://data.etabus.gov.hk/v1/transport/kmb/eta/A4C9136D18013389/3D/3"
@@ -214,79 +227,79 @@ const myRoutes: Route[] = [
       }
     ]
   },
-  {
-    name: "793 - 新蒲崗 Mikiki to 將軍澳 先進製造業中心, 駿光街",
-    kmbURL: null,
-    kmbDestTC: null,
-    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001573/793"],
-    citybusDestTC: "將軍澳工業邨",
-    otherPlatforms: [
-      {
-        name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/001573%2C19"
-      }
-    ]
-  },
-  {
-    name: "793 - 調景嶺 to 將軍澳 先進製造業中心, 駿光街",
-    kmbURL: null,
-    kmbDestTC: null,
-    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793" ],
-    citybusDestTC: null,
-    otherPlatforms: [
-      {
-        name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/002917%2C26"
-      }
-    ]
-  },
-  {
-    name: "796X - 調景嶺 to 將軍澳 先進製造業中心, 駿光街",
-    kmbURL: null,
-    kmbDestTC: null,
-    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/796X"],
-    citybusDestTC: "將軍澳工業邨",
-    otherPlatforms: [
-      {
-        name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/796x-2-tsim-sha-tsui-east-tseung-kwan-o-industrial-estate"
-      }
-    ]
-  },
-  {
-    name: "796X - 將軍澳 先進製造業中心, 駿光街 to HH",
-    kmbURL: null,
-    kmbDestTC: null,
-    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002927/796X"],
-    citybusDestTC: null,
-    otherPlatforms: [
-      {
-        name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-tsim-sha-tsui-east/002927%2C4"
-      },
-      {
-        name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-%EF%BC%8F-tseung-kwan-o-station-tsim-sha-tsui-east/002927%2C4"
-      }
-    ]
-  },
-  {
-    name: "796X - 將軍澳 日出康城領都, 環保大道 to HH",
-    kmbURL: null,
-    kmbDestTC: null,
-    citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002928/796X"],
-    citybusDestTC: null,
-    otherPlatforms: [
-      {
-        name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-tsim-sha-tsui-east/002928%2C5"
-      },
-      {
-        name: "hkbus.app",
-        url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-%EF%BC%8F-tseung-kwan-o-station-tsim-sha-tsui-east/002928%2C5"
-      }
-    ]
-  }
+  // {
+  //   name: "793 - 新蒲崗 Mikiki -> 將軍澳 先進製造業中心, 駿光街",
+  //   kmbURL: null,
+  //   kmbDestTC: null,
+  //   citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001573/793"],
+  //   citybusDestTC: "將軍澳工業邨",
+  //   otherPlatforms: [
+  //     {
+  //       name: "hkbus.app",
+  //       url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/001573%2C19"
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: "793 - 調景嶺 -> 將軍澳 先進製造業中心, 駿光街",
+  //   kmbURL: null,
+  //   kmbDestTC: null,
+  //   citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/793" ],
+  //   citybusDestTC: null,
+  //   otherPlatforms: [
+  //     {
+  //       name: "hkbus.app",
+  //       url: "https://hkbus.app/zh/route/793-1-so-uk-tseung-kwan-o-industrial-estate/002917%2C26"
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: "796X - 調景嶺 -> 將軍澳 先進製造業中心, 駿光街",
+  //   kmbURL: null,
+  //   kmbDestTC: null,
+  //   citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002917/796X"],
+  //   citybusDestTC: "將軍澳工業邨",
+  //   otherPlatforms: [
+  //     {
+  //       name: "hkbus.app",
+  //       url: "https://hkbus.app/zh/route/796x-2-tsim-sha-tsui-east-tseung-kwan-o-industrial-estate"
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: "796X - 將軍澳 先進製造業中心, 駿光街 -> HH",
+  //   kmbURL: null,
+  //   kmbDestTC: null,
+  //   citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002927/796X"],
+  //   citybusDestTC: null,
+  //   otherPlatforms: [
+  //     {
+  //       name: "hkbus.app",
+  //       url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-tsim-sha-tsui-east/002927%2C4"
+  //     },
+  //     {
+  //       name: "hkbus.app",
+  //       url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-%EF%BC%8F-tseung-kwan-o-station-tsim-sha-tsui-east/002927%2C4"
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: "796X - 將軍澳 日出康城領都, 環保大道 -> HH",
+  //   kmbURL: null,
+  //   kmbDestTC: null,
+  //   citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/002928/796X"],
+  //   citybusDestTC: null,
+  //   otherPlatforms: [
+  //     {
+  //       name: "hkbus.app",
+  //       url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-tsim-sha-tsui-east/002928%2C5"
+  //     },
+  //     {
+  //       name: "hkbus.app",
+  //       url: "https://hkbus.app/zh/route/796x-1-tseung-kwan-o-industrial-estate-%EF%BC%8F-tseung-kwan-o-station-tsim-sha-tsui-east/002928%2C5"
+  //     }
+  //   ]
+  // }
 ];
 
 ((container: HTMLDivElement | null) => {
