@@ -156,7 +156,7 @@ interface Route {
 
 const myRoutes: Route[] = [
   {
-    name: "116 - HH to Tak Oi",
+    name: "116 - 紅磡 to 德愛",
     kmbURL: ["https://data.etabus.gov.hk/v1/transport/kmb/eta/11B2034DDF30617A/116/1"],
     kmbDestTC: "慈雲山(中)",
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001475/116"],
@@ -169,7 +169,7 @@ const myRoutes: Route[] = [
     ]
   },
   {
-    name: "116 - Tak Oi to HH",
+    name: "116 - 德愛 to 紅磡",
     kmbURL: null,
     kmbDestTC: null,
     citybusURL: ["https://rt.data.gov.hk//v2/transport/citybus/eta/CTB/001703/116"],
@@ -178,6 +178,19 @@ const myRoutes: Route[] = [
       {
         name: "hkbus.app",
         url: "https://hkbus.app/zh/route/116-1-tsz-wan-shan-(central)-quarry-bay-(yau-man-street)/001703%2C3"
+      }
+    ]
+  },
+  {
+    name: "272S - 科技園 to 鑽石山",
+    kmbURL: [ "https://data.etabus.gov.hk/v1/transport/kmb/eta/9C6800DD6E0CD683/272S/1" ],
+    kmbDestTC: "鑽石山站",
+    citybusURL: null,
+    citybusDestTC: null,
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/272s-1-hong-kong-science-park-diamond-hill-station/9C6800DD6E0CD683%2C0"
       }
     ]
   },
