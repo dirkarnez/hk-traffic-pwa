@@ -227,7 +227,7 @@ const myRoutes: Route[] = [
       }
     ]
   },
-    {
+  {
     name: "38 - 黃大仙轉車站 -> 葵盛(東)",
     kmbURL: [ "https://data.etabus.gov.hk/v1/transport/kmb/eta/62A1C8EFAC876BDB/38/1" ],
     kmbDestTC: "葵盛(東)",
@@ -240,6 +240,33 @@ const myRoutes: Route[] = [
       }
     ]
   },
+  {
+    name: "38 - 葵盛西邨 (KW248) -> 黃大仙轉車站-沙田坳道 (WT209)",
+    kmbURL: [ "https://data.etabus.gov.hk/v1/transport/kmb/eta/3350CE851FCC56A3/38/1" ],
+    kmbDestTC: "平田",
+    citybusURL: null,
+    citybusDestTC: null,
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/38-1-kwai-shing-(east)-ping-tin/2658CCFAB79763B6%2C12"
+      }
+    ]
+  },
+  {
+    name: "38 - 葵涌屏麗徑 (KW405) -> 黃大仙轉車站-沙田坳道 (WT209)",
+    kmbURL: [ "https://data.etabus.gov.hk/v1/transport/kmb/eta/2658CCFAB79763B6/38/1" ],
+    kmbDestTC: "平田",
+    citybusURL: null,
+    citybusDestTC: null,
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/38-1-kwai-shing-(east)-ping-tin/2658CCFAB79763B6%2C12"
+      }
+    ]
+  },
+  
   // {
   //   name: "793 - 新蒲崗 Mikiki -> 將軍澳 先進製造業中心, 駿光街",
   //   kmbURL: null,
