@@ -7,6 +7,7 @@
 - [ ] Worker-based timer countdown + background refetch
 - [ ] map
 - [ ] routing
+- [ ] more generic
 
 ### Reference
 - [markmybytes/lost-in-mtr: Car numbers lookup for MTR trains](https://github.com/markmybytes/lost-in-mtr)
