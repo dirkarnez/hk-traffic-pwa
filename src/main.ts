@@ -227,6 +227,19 @@ const myRoutes: Route[] = [
       }
     ]
   },
+    {
+    name: "38 - 黃大仙轉車站 -> 葵盛(東)",
+    kmbURL: [ "https://data.etabus.gov.hk/v1/transport/kmb/eta/62A1C8EFAC876BDB/38/1" ],
+    kmbDestTC: "葵盛(東)",
+    citybusURL: null,
+    citybusDestTC: null,
+    otherPlatforms: [
+      {
+        name: "hkbus.app",
+        url: "https://hkbus.app/zh/route/38-1-ping-tin-kwai-shing-(east)/62A1C8EFAC876BDB%2C16"
+      }
+    ]
+  },
   // {
   //   name: "793 - 新蒲崗 Mikiki -> 將軍澳 先進製造業中心, 駿光街",
   //   kmbURL: null,
